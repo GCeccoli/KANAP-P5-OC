@@ -10,7 +10,7 @@ function collecteProduits(){
 
 async function donneesProduit(){
     await collecteProduits();
-    let donneesProduits = detailsProduits;
-    document.getElementById("items").innerHTML = donneesProduits.map((produits) => `<a hrerf="./product.html?id=${produits._id}"> <article> <img src="${produits.imageUrl}" alt="${produits.altTxt}"> <h3 class="productName">${produits.name}</h3> <p class="productCollection">${produits.description}></p> </article> </a>`).join("")
+    const donneesProduits = detailsProduits;
+    document.getElementById("items").innerHTML = donneesProduits.map((produits) => `<a hrerf="./product.html?id=${produits._id}"> <article> <img src="${produits.imageUrl}" alt="${produits.altTxt}"> <h3 class="productName">${produits.name}</h3> <p class="productDescription">${produits.description}></p> </article> </a>`).join("")
 };
 donneesProduit();
