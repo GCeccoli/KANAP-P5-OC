@@ -46,6 +46,7 @@ function getPost(product) {
 let choiceQuantity = document.querySelector("#quantity");
 let choiceColor = document.querySelector("#colors");
 let sendToCart = document.querySelector("#addToCart");
+
 sendToCart.addEventListener("click", ()=>{
     // Chercher le panier dans le LocalStorage
     function getCart(){
@@ -60,15 +61,15 @@ sendToCart.addEventListener("click", ()=>{
     // Fonction d'ajout au panier
     function addToCart (product){
         let addedItem = {
-            id: idProduct,
-            color: choiceColor.value,
-            quantity: choiceQuantity.value,
-            name: product.name
+            idArticle: idProduct,
+            colorArticle: choiceColor.value,
+            quantityArticle: choiceQuantity.value,
+            nameArticle: product.name
         };
         // On recherche si le produit est déjà dans le panier
         let foundProduct = cart.find(p => p.id == idProduct && p.color == choiceColor.value);
         console.log(foundProduct);
-        // Si le produit n'est pas dans le panier on l'incrémente
+        // Si le produit n'est pas dans le panier on l'incrémente sinon, on crée un nouveau tableau.
         if (foundProduct != undefined){
             foundProduct.quantity = parseInt(foundProduct.quantity) + parseInt(choiceQuantity.value);
         } else {
@@ -77,7 +78,8 @@ sendToCart.addEventListener("click", ()=>{
         saveCart(cart);
     }
     addToCart(product);
-})
+});
+
 
 
 
