@@ -1,32 +1,49 @@
 // Récupère les données de mon stockage local
-function getLocalStorage(){
-  let canapLocalStorage = JSON.parse(localStorage.getItem("cart"));
-  return canapLocalStorage;
-}
-getLocalStorage();
-console.log(getLocalStorage());
+let canapLocalStorage = JSON.parse(localStorage.getItem("cart"));
+console.log(canapLocalStorage);
 
 let id = "";
 
 //Fonction asynchrone qui récupère les données de l'api
 async function productFromApi(id){
   let res = await fetch("http://localhost:3000/api/products/" + id);
-    return await res.json();
+    return res.json();
 }
 productFromApi(id);
 console.log(productFromApi(id));
 
-//Ajout des éléments dans le HTML
+
+// Insérer les éléments dans le html
 const positionEmptyCart = document.querySelector("#cart__items");
-async function panier(){
-    if(getLocalStorage() === null && productFromApi(id) === null) {
-      //Si le panier est vide
-      const emptyCart = `<p> Le panier est vide </p>`;
-      positionEmptyCart.innerHTML = emptyCart;
-      // Si le panier n'est pas vide
-  }
+  if(canapLocalStorage === null && id === null){
+    const emptyCart = `<p> Panier vide</p>`;
+    positionEmptyCart.innerHTML = emptyCart;
+    console.log(emptyCart);
+  } else {
+    for (let cart in canapLocalStorage){
+      // Insertion de l'élément "article"
+      let canapArticle = document.createElement("article");
+      document.querySelector("#cart__items").appendChild(canapArticle);
+      canapArticle.className = "cart__item";
+      canapArticle.setAttribute('data-id', canapLocalStorage[cart].id);
+      console.log(canapArticle)
+
+      // Insertion de l'élément "div"
+      let canapDivImg = document.createElement("div");
+      canapArticle.appendChild(canapDivImg);
+      canapDivImg.className = "cart__item__img";
+  
+      // Insertion de l'image
+      let canapImg = document.createElement("img");
+      canapDivImg.appendChild(canapImg);
+      canapImg.src = [productFromApi(id)].imageUrl;
+      canapImg.alt = [productFromApi(id)].altTxt;
+      console.log(canapImg);
+    }
 }
-panier();
+
+
+
 
 
 
