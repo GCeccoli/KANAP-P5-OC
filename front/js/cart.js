@@ -1,13 +1,33 @@
+// Récupère les données de mon stockage local
 function getLocalStorage(){
   let canapLocalStorage = JSON.parse(localStorage.getItem("cart"));
   return canapLocalStorage;
 }
 getLocalStorage();
+console.log(getLocalStorage());
 
+let id = "";
+
+//Fonction asynchrone qui récupère les données de l'api
 async function productFromApi(id){
-  let res = await fetch("http://localhost:3000/api/products/" + idProduct);
+  let res = await fetch("http://localhost:3000/api/products/" + id);
     return await res.json();
 }
+productFromApi(id);
+console.log(productFromApi(id));
+
+//Ajout des éléments dans le HTML
+const positionEmptyCart = document.querySelector("#cart__items");
+async function panier(){
+    if(getLocalStorage() === null && productFromApi(id) === null) {
+      //Si le panier est vide
+      const emptyCart = `<p> Le panier est vide </p>`;
+      positionEmptyCart.innerHTML = emptyCart;
+      // Si le panier n'est pas vide
+  }
+}
+panier();
+
 
 
 /*const positionEmptyCart = document.querySelector("#cart__items");
@@ -41,6 +61,7 @@ if(canapLocalStorage === null){
               </article>`)
             };
       }*/
+
 
 
 

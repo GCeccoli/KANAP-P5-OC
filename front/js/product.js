@@ -61,10 +61,10 @@ sendToCart.addEventListener("click", ()=>{
     // Fonction d'ajout au panier
     function addToCart (product){
         let addedItem = {
-            idArticle: idProduct,
-            colorArticle: choiceColor.value,
-            quantityArticle: choiceQuantity.value,
-            nameArticle: product.name
+            id: idProduct,
+            color: choiceColor.value,
+            quantity: choiceQuantity.value,
+            name: product.name
         };
         // On recherche si le produit est déjà dans le panier
         let foundProduct = cart.find(p => p.id == idProduct && p.color == choiceColor.value);
