@@ -2,20 +2,10 @@
 let canapLocalStorage = JSON.parse(localStorage.getItem("cart"));
 console.log(canapLocalStorage);
 
-let id = "";
-
-//Fonction asynchrone qui récupère les données de l'api
-async function productFromApi(id){
-  let res = await fetch("http://localhost:3000/api/products/" + id);
-    return res.json();
-}
-productFromApi(id);
-console.log(productFromApi(id));
-
-
 // Insérer les éléments dans le html
 const positionEmptyCart = document.querySelector("#cart__items");
-  if(canapLocalStorage === null && id === null){
+function addCart(){
+  if(canapLocalStorage === null){
     const emptyCart = `<p> Panier vide</p>`;
     positionEmptyCart.innerHTML = emptyCart;
     console.log(emptyCart);
@@ -25,8 +15,7 @@ const positionEmptyCart = document.querySelector("#cart__items");
       let canapArticle = document.createElement("article");
       document.querySelector("#cart__items").appendChild(canapArticle);
       canapArticle.className = "cart__item";
-      canapArticle.setAttribute('data-id', canapLocalStorage[cart].id);
-      console.log(canapArticle)
+      canapArticle.setAttribute('data-id', canapLocalStorage[cart].idKanap);
 
       // Insertion de l'élément "div"
       let canapDivImg = document.createElement("div");
@@ -36,160 +25,71 @@ const positionEmptyCart = document.querySelector("#cart__items");
       // Insertion de l'image
       let canapImg = document.createElement("img");
       canapDivImg.appendChild(canapImg);
-      canapImg.src = [productFromApi(id)].imageUrl;
-      canapImg.alt = [productFromApi(id)].altTxt;
-      console.log(canapImg);
+      canapImg.src = canapLocalStorage[cart].imageKanap;
+      canapImg.alt = canapLocalStorage[cart].altKanap;
+      
+      // Insertion de l'élément "div"
+      let canapItemContent = document.createElement("div");
+      canapArticle.appendChild(canapItemContent);
+      canapItemContent.className = "cart__item__content";
+  
+      // Insertion de l'élément "div"
+      let canapItemContentTitlePrice = document.createElement("div");
+      canapItemContent.appendChild(canapItemContentTitlePrice);
+      canapItemContentTitlePrice.className = "cart__item__content__titlePrice";
+
+      // Insertion du titre h3
+      let canapName = document.createElement("h2");
+      canapItemContentTitlePrice.appendChild(canapName);
+      canapName.innerHTML = canapLocalStorage[cart].nameKanap;
+
+      // Insertion de la couleur
+      let canapColor = document.createElement("p");
+      canapName.appendChild(canapColor);
+      canapColor.innerHTML = canapLocalStorage[cart].colorKanap;
+  
+      // Insertion du prix
+      let canapPrice = document.createElement("p");
+      canapItemContentTitlePrice.appendChild(canapPrice);
+      canapPrice.innerHTML = canapLocalStorage[cart].priceKanap + " €";
+
+      // Insertion de l'élément "div"
+      let canapItemContentSettings = document.createElement("div");
+      canapItemContent.appendChild(canapItemContentSettings);
+      canapItemContentSettings.className = "cart__item__content__settings";
+  
+      // Insertion de l'élément "div"
+      let canapItemContentSettingsQuantity = document.createElement("div");
+      canapItemContentSettings.appendChild(canapItemContentSettingsQuantity);
+      canapItemContentSettingsQuantity.className = "cart__item__content__settings__quantity";
+      
+      // Insertion de "Qté : "
+      let canapQte = document.createElement("p");
+      canapItemContentSettingsQuantity.appendChild(canapQte);
+      canapQte.innerHTML = "Qté : ";
+  
+      // Insertion de la quantité
+      let canapQuantity = document.createElement("input");
+      canapItemContentSettingsQuantity.appendChild(canapQuantity);
+      canapQuantity.value = canapLocalStorage[cart].quantityKanap;
+      canapQuantity.className = "itemQuantity";
+      canapQuantity.setAttribute("type", "number");
+      canapQuantity.setAttribute("min", "1");
+      canapQuantity.setAttribute("max", "100");
+      canapQuantity.setAttribute("name", "itemQuantity");
+
+      // Insertion de l'élément "div"
+      let canapDeleteSettings = document.createElement("div");
+      canapItemContentSettings.appendChild(canapDeleteSettings);
+      canapDeleteSettings.className = "cart__item__content__settings__delete";
+  
+      // Insertion de "p" supprimer
+      let canapDelete = document.createElement("p");
+      canapDeleteSettings.appendChild(canapDelete);
+      canapDelete.className = "deleteItem";
+      canapDelete.innerHTML = "Supprimer";
     }
+  }
 }
+addCart();
 
-
-
-
-
-
-/*const positionEmptyCart = document.querySelector("#cart__items");
-if(canapLocalStorage === null){
-    //Si le panier est vide
-    const emptyCart = `<p> Le panier est vide </p>`;
-    positionEmptyCart.innerHTML = emptyCart;
-    // Si le panier n'est pas vide
-} else {
-        for (let cart of canapLocalStorage){
-            document.getElementById("cart__items").innerHTML = canapLocalStorage.map((article) =>   `<article class="cart__item" data-id="${cart.id}" data-color="{product-color}">
-                <div class="cart__item__img">
-                  <img src=${article.imageUrl} alt=${article.altTxt}>
-                </div>
-                <div class="cart__item__content">
-                  <div class="cart__item__content__description">
-                    <h2>${cart.nameArticle}</h2>
-                    <p>${cart.colorArticle} </p>
-                    <p>${article.price} €</p>
-                  </div>
-                  <div class="cart__item__content__settings">
-                    <div class="cart__item__content__settings__quantity">
-                      <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value=${cart.quantityArticle}>
-                    </div>
-                    <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem">Supprimer</p>
-                    </div>
-                  </div>
-                </div>
-              </article>`)
-            };
-      }*/
-
-
-
-
-    /*// Insertion de l'élément "article"
-        let canapArticle = document.createElement("article");
-        document.querySelector("#cart__items").appendChild(canapArticle);
-        canapArticle.className = "cart__item";
-        canapArticle.setAttribute('data-id', canapLocalStorage[cart].idArticle);
-
-        // Insertion de l'élément "div"
-        let productDivImg = document.createElement("div");
-        canapArticle.appendChild(productDivImg);
-        productDivImg.className = "cart__item__img";
-    
-        // Insertion de l'image
-        let productImg = document.createElement("img");
-        productDivImg.appendChild(productImg);
-        productImg.src = `fetch("http://localhost:3000/api/products/${imageUrl}")`
-        productImg.alt = `fetch("http://localhost:3000/api/products/${altTxt}"`*/
-    
-
-
-
-
-
-/* const positionEmptyCart = document.querySelector("#cart__items");
-// Si le panier est vide
- function getPost(){
-    if (canapLocalStorage === null || canapLocalStorage == 0) {
-        const emptyCart = `<p>Votre panier est vide</p>`;
-        positionEmptyCart.innerHTML = emptyCart;
-    } else {
-    for (let cart in canapLocalStorage){
-        // Insertion de l'élément "article"
-        let productArticle = document.createElement("article");
-        document.querySelector("#cart__items").appendChild(productArticle);
-        productArticle.className = "cart__item";
-        productArticle.setAttribute('data-id', canapLocalStorage[cart].id);
-    
-        // Insertion de l'élément "div"
-        let productDivImg = document.createElement("div");
-        productArticle.appendChild(productDivImg);
-        productDivImg.className = "cart__item__img";
-    
-        // Insertion de l'image
-        let productImg = document.createElement("img");
-        productDivImg.appendChild(productImg);
-        productImg.src = product.imageUrl;
-        productImg.alt = product.altTxt;
-        
-        // Insertion de l'élément "div"
-        let productItemContent = document.createElement("div");
-        productArticle.appendChild(productItemContent);
-        productItemContent.className = "cart__item__content";
-    
-        // Insertion de l'élément "div"
-        let productItemContentTitlePrice = document.createElement("div");
-        productItemContent.appendChild(productItemContentTitlePrice);
-        productItemContentTitlePrice.className = "cart__item__content__titlePrice";
-        
-        // Insertion du titre h3
-        let productTitle = document.createElement("h2");
-        productItemContentTitlePrice.appendChild(productTitle);
-        productTitle.innerHTML = canapLocalStorage[cart].name;
-    
-        // Insertion de la couleur
-        let productColor = document.createElement("p");
-        productTitle.appendChild(productColor);
-        productColor.innerHTML = canapLocalStorage[cart].color;
-        productColor.style.fontSize = "20px";
-    
-        // Insertion du prix
-        let productPrice = document.createElement("p");
-        productItemContentTitlePrice.appendChild(productPrice);
-        productPrice.innerHTML = canapLocalStorage[cart].price + " €";
-    
-        // Insertion de l'élément "div"
-        let productItemContentSettings = document.createElement("div");
-        productItemContent.appendChild(productItemContentSettings);
-        productItemContentSettings.className = "cart__item__content__settings";
-    
-        // Insertion de l'élément "div"
-        let productItemContentSettingsQuantity = document.createElement("div");
-        productItemContentSettings.appendChild(productItemContentSettingsQuantity);
-        productItemContentSettingsQuantity.className = "cart__item__content__settings__quantity";
-        
-        // Insertion de "Qté : "
-        let productQte = document.createElement("p");
-        productItemContentSettingsQuantity.appendChild(productQte);
-        productQte.innerHTML = "Qté : ";
-    
-        // Insertion de la quantité
-        let productQuantity = document.createElement("input");
-        productItemContentSettingsQuantity.appendChild(productQuantity);
-        productQuantity.value = canapLocalStorage[cart].quantity;
-        productQuantity.className = "itemQuantity";
-        productQuantity.setAttribute("type", "number");
-        productQuantity.setAttribute("min", "1");
-        productQuantity.setAttribute("max", "100");
-        productQuantity.setAttribute("name", "itemQuantity");
-    
-        // Insertion de l'élément "div"
-        let productItemContentSettingsDelete = document.createElement("div");
-        productItemContentSettings.appendChild(productItemContentSettingsDelete);
-        productItemContentSettingsDelete.className = "cart__item__content__settings__delete";
-    
-        // Insertion de "p" supprimer
-        let productSupprimer = document.createElement("p");
-        productItemContentSettingsDelete.appendChild(productSupprimer);
-        productSupprimer.className = "deleteItem";
-        productSupprimer.innerHTML = "Supprimer";
-    }
-    }}
-    getPost();*/
