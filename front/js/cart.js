@@ -2,15 +2,20 @@
 let canapLocalStorage = JSON.parse(localStorage.getItem("cart"));
 console.log(canapLocalStorage);
 
+//Fonction de mise à jour du panier
+function updateCart (){
+  localStorage.setItem("cart", JSON.stringify(canapLocalStorage));
+};
+
 // Insérer les éléments dans le html
 const positionEmptyCart = document.querySelector("#cart__items");
 function addCart(){
-  if(canapLocalStorage === null){
+  if(canapLocalStorage == 0){
     const emptyCart = `<p> Panier vide</p>`;
     positionEmptyCart.innerHTML = emptyCart;
     console.log(emptyCart);
   } else {
-    for (let cart in canapLocalStorage){
+      for (let cart in canapLocalStorage){
       // Insertion de l'élément "article"
       let canapArticle = document.createElement("article");
       document.querySelector("#cart__items").appendChild(canapArticle);
@@ -92,4 +97,36 @@ function addCart(){
   }
 }
 addCart();
+
+// Suppression d'un produit
+function deleteCanap() {
+  // On récupère le bouton supprimer
+  let deleteBtn = document.querySelectorAll(".deleteItem");
+
+  // Création d'une boucle qui parcourt le tableau
+  for (let i = 0; i < deleteBtn.length; i++){
+      //On écoute l'évenement
+      deleteBtn[i].addEventListener("click" , (event) => {
+          // On annule le comportement par défaut de l'event.
+          event.preventDefault();
+
+          //On selectionne le produit via son id et sa couleur
+          let deleteCanap = canapLocalStorage[i].idKanap;
+          let colorDelete = canapLocalStorage[i].colorKanap;
+
+          canapLocalStorage = canapLocalStorage.filter( el => el.idKanap !== deleteCanap || el.colorKanap !== colorDelete );
+          
+          //Mise à jour du panier
+          updateCart();
+
+          //Alerte produit supprimé et refresh
+          alert("Votre produit à bien été supprimé.");
+          location.reload();
+      })
+  }
+}
+deleteCanap();
+
+
+
 
