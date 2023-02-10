@@ -10,7 +10,7 @@ function updateCart (){
 // Insérer les éléments dans le html
 const positionEmptyCart = document.querySelector("#cart__items");
 function addCart(){
-  if(canapLocalStorage == 0){
+  if(canapLocalStorage == 0 || canapLocalStorage === null){
     const emptyCart = `<p> Panier vide</p>`;
     positionEmptyCart.innerHTML = emptyCart;
     console.log(emptyCart);
@@ -114,18 +114,49 @@ function deleteCanap() {
           let deleteCanap = canapLocalStorage[i].idKanap;
           let colorDelete = canapLocalStorage[i].colorKanap;
 
+          //On selectionne les éléments à garder et on supprime l'élément en cliquant sur le bouton
           canapLocalStorage = canapLocalStorage.filter( el => el.idKanap !== deleteCanap || el.colorKanap !== colorDelete );
           
           //Mise à jour du panier
           updateCart();
 
-          //Alerte produit supprimé et refresh
+          //Alerte produit supprimé et on rafraichit la page
           alert("Votre produit à bien été supprimé.");
-          location.reload();
+          window.location.href = "cart.html";
       })
   }
 }
 deleteCanap();
+
+// Récupération de la quantité de produit
+
+function getTotals(){
+
+  // Récupération du total des quantités
+  let canapQuantityTotal = document.getElementsByClassName('itemQuantity');
+  totalQuantity = 0;
+
+  for (let i = 0; i < canapQuantityTotal.length; ++i) {
+    totalQuantity += canapQuantityTotal[i].valueAsNumber;
+  }
+
+  let productTotalQuantity = document.getElementById('totalQuantity');
+  productTotalQuantity.innerHTML = totalQuantity;
+  console.log(totalQuantity);
+
+  // Récupération du prix total
+  totalPrice = 0;
+
+  for (let i = 0; i < canapQuantityTotal.length; ++i) {
+      totalPrice += (canapQuantityTotal[i].valueAsNumber * canapLocalStorage[i].priceKanap);
+  }
+
+  let productTotalPrice = document.getElementById('totalPrice');
+  productTotalPrice.innerHTML = totalPrice;
+  console.log(totalPrice);
+}
+getTotals();
+
 
 
 
