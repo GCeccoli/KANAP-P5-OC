@@ -106,10 +106,7 @@ function deleteCanap() {
   // Création d'une boucle qui parcourt le tableau
   for (let i = 0; i < deleteBtn.length; i++){
       //On écoute l'évenement
-      deleteBtn[i].addEventListener("click" , (event) => {
-          // On annule le comportement par défaut de l'event.
-          event.preventDefault();
-
+      deleteBtn[i].addEventListener("click" , () => {
           //On selectionne le produit via son id et sa couleur
           let deleteCanap = canapLocalStorage[i].idKanap;
           let colorDelete = canapLocalStorage[i].colorKanap;
@@ -122,7 +119,7 @@ function deleteCanap() {
 
           //Alerte produit supprimé et on rafraichit la page
           alert("Votre produit à bien été supprimé.");
-          window.location.href = "cart.html";
+          location.reload();
       })
   }
 }
@@ -157,7 +154,40 @@ function getTotals(){
 }
 getTotals();
 
+// Gestion de la quantité
+function updateQuantity() {
+  //On récupère le bouton de selection de quantité
+  let quantityModif = document.querySelectorAll(".itemQuantity");
 
+  // On crée une boucle qui va gérer le changement de quantité
+  for (let k = 0; k < quantityModif.length; k++){
 
+    //On écoute l'évent sur le bouton de changement de quantité
+    quantityModif[k].addEventListener("change" , () => {
 
+          //Selection de la quantité dans le local storage
+          let quantityBase = canapLocalStorage[k].quantityKanap;
 
+          //Selection de la nouvelle quantité
+          let modifValue = quantityModif[k].valueAsNumber;
+
+          //Stockage de la  nouvelle quantité dans une variable
+          const resultFind = canapLocalStorage.find((el) => el.modifValue !== quantityBase);
+
+          //Sauvegarde de la nouvelle quantité dans le local storage
+          resultFind.quantityKanap = modifValue;
+          canapLocalStorage[k].quantityKanap = resultFind.quantityKanap;
+
+          //Réactualisation du local storage
+          updateCart ();
+
+          //Alert qui stipule que la quantité à été modifiée
+          alert("La quantité à été modifiée");
+
+          // Rafraichissement de la page
+          location.reload();
+      })
+
+  }
+}
+updateQuantity();
