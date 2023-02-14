@@ -167,13 +167,13 @@ function updateQuantity() {
 
           //Selection de la quantité dans le local storage
           let quantityBase = canapLocalStorage[k].quantityKanap;
-
+          
           //Selection de la nouvelle quantité
           let modifValue = quantityModif[k].valueAsNumber;
 
           //Stockage de la  nouvelle quantité dans une variable
           const resultFind = canapLocalStorage.find((el) => el.modifValue !== quantityBase);
-
+          
           //Sauvegarde de la nouvelle quantité dans le local storage
           resultFind.quantityKanap = modifValue;
           canapLocalStorage[k].quantityKanap = resultFind.quantityKanap;
@@ -187,7 +187,6 @@ function updateQuantity() {
           // Rafraichissement de la page
           location.reload();
       })
-
   }
 }
 updateQuantity();
