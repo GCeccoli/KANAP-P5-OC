@@ -154,7 +154,6 @@ function getTotals(){
 }
 getTotals();
 
-// Gestion de la quantité
 function updateQuantity() {
   //On récupère le bouton de selection de quantité
   let quantityModif = document.querySelectorAll(".itemQuantity");
