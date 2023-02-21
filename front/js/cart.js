@@ -155,27 +155,45 @@ function getTotals(){
 getTotals();
 
 function updateQuantity() {
+  // Récupération de l'élément
   let quantityModified = document.querySelectorAll(".itemQuantity");
 
+  //Boucle pour itérer le tableau
   for (let k = 0; k < quantityModified.length; k++){
+    // Ecoute de l'évènement
     quantityModified[k].addEventListener("change" , (event) => {
+          // Annulation du comportement par defaut
           event.preventDefault();
 
-          //Selection de l'element à modifier
+          //Récupération de la quantité de base
           let quantityModif = canapLocalStorage[k].quantityKanap;
+          // Récupération de la nouvelle quantité
           let qttModifValue = quantityModified[k].valueAsNumber;
+          // Récupération de l'id
           let idItem = canapLocalStorage[k].idKanap;
           
+          //Création d'une variable qui prend en compte la nouvelle quantité et l'id du produit
           const resultFind = canapLocalStorage.find((el) => el.qttModifValue !== quantityModif && el.idKanap === idItem);
 
+          //Enregistrement de la nouvelle quantité
           resultFind.quantityKanap = qttModifValue;
           canapLocalStorage[k].quantityKanap = resultFind.quantityKanap;
 
+          // Mise à jour du local storage
           updateCart();
       
-          // refresh rapide
+          // Rafraîchissement rapide de la page
           location.reload();
       })
   }
 }
 updateQuantity();
+
+// Partie Validation du formulaire avec Regex
+
+function getForm(){
+  let form = document.querySelector(".cart__order__form");
+
+  //Création des expressions régulières
+  
+}
