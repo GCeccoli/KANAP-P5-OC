@@ -164,8 +164,9 @@ function updateQuantity() {
           //Selection de l'element à modifier
           let quantityModif = canapLocalStorage[k].quantityKanap;
           let qttModifValue = quantityModified[k].valueAsNumber;
+          let idItem = canapLocalStorage[k].idKanap;
           
-          const resultFind = canapLocalStorage.find((el) => el.qttModifValue !== quantityModif);
+          const resultFind = canapLocalStorage.find((el) => el.qttModifValue !== quantityModif && el.idKanap === idItem);
 
           resultFind.quantityKanap = qttModifValue;
           canapLocalStorage[k].quantityKanap = resultFind.quantityKanap;
@@ -178,21 +179,3 @@ function updateQuantity() {
   }
 }
 updateQuantity();
-
-/*function updateQuantity(){
-  const inputQuantity = document.querySelectorAll(".itemQuantity");
-  inputQuantity.forEach((btn)=>{
-    btn.addEventListener("change", (event)=>{
-      const article = btn.closest("article");
-      const idItem = article.dataset.id;
-      const colorItem = article.dataset.color;
-      let foundItem = canapLocalStorage.find(p => p.idKanap === idItem && p.colorKanap === colorItem);
-      if (foundItem !== null){
-        getTotals();
-        updateCart();
-      }
-      location.reload();
-    })
-  })
-}
-updateQuantity();*/
