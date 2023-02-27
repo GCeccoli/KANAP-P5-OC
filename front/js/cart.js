@@ -191,13 +191,6 @@ updateQuantity();
 
 // Partie Validation du formulaire avec Regex
 
-//Variables contenant les messages d'erreur
-const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
-const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-const addressErrorMsg = document.getElementById("addressErrorMsg");
-const cityErrorMsg = document.getElementById("cityErrorMsg");
-const emailErrorMsg = document.getElementById("emailErrorMsg");
-
 //Validation du prénom
 let firstNameInput = document.getElementById("firstName");
 
@@ -266,56 +259,18 @@ mailInput.addEventListener("change", ()=>{
   }
 });
 
+//Variables contenant les messages d'erreur
+const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+const addressErrorMsg = document.getElementById("addressErrorMsg");
+const cityErrorMsg = document.getElementById("cityErrorMsg");
+const emailErrorMsg = document.getElementById("emailErrorMsg");
+
 // Commander
 
-const postUrlApi = "http://localhost:3000/api/products/order"
-const submitBtn = document.getElementById("order");
+const sendForm = document.getElementById("order");
 
-submitBtn.addEventListener("click", (e)=>{
-  e.preventDefault()
-});
-
-//Vérification du formulaire
-if(firstNameInput.value == "" || lastNameInput.value == "" || adressInput.value == "" || cityInput.value == "" || mailInput.value == ""){
-  alert("Tous les champs doivent être remplis")
-} else if (confirm("Souhaitez-vous finaliser la commande ?") == true){
-  let arrayKanap = []
-
-  //Récupération des données du formulaire
-  let order = {
-    contact: {
-      firstName: firstNameInput.value,
-      lastName: lastNameInput.value,
-      adress: adressInput.value,
-      city: cityInput.value,
-      mail: mailInput.value
-    },
-    items: arrayKanap
-  }
-
-
-// Envoi du formulaire dans la page de confirmation avec la méthode POST
-const sendForm = {
-  method: 'POST',
-  body: JSON.stringify(order),
-  _headers: {
-    'Content-type': 'application/json',
-    'Accept': 'application.json'
-  },
-  get headers() {
-    return this._headers;
-  },
-  set headers(value) {
-    this._headers = value;
-  },
-};
-
-fetch(postUrlApi, sendForm)
-  .then(response => response.json())
-  .then(datas => {
-    window.location.href = "confirmation.html?orderId="+ datas.orderId
-  })
-  .catch(error =>{
-    alert(error);
-  })
+// controle du formulaire
+if(firstNameInput == "" || lastNameInput == "" || adressInput == "" || cityInput == "" || mailInput == ""){
+  
 }
