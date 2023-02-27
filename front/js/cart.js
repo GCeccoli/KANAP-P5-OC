@@ -191,9 +191,131 @@ updateQuantity();
 
 // Partie Validation du formulaire avec Regex
 
-function getForm(){
-  let form = document.querySelector(".cart__order__form");
+//Variables contenant les messages d'erreur
+const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+const addressErrorMsg = document.getElementById("addressErrorMsg");
+const cityErrorMsg = document.getElementById("cityErrorMsg");
+const emailErrorMsg = document.getElementById("emailErrorMsg");
 
-  //Création des expressions régulières
-  
+//Validation du prénom
+let firstNameInput = document.getElementById("firstName");
+
+function validFirstName (input) {
+  return/^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/.test(input)
+}
+
+firstNameInput.addEventListener("change", () =>{
+  if(validFirstName(firstNameInput.value) == false){
+    firstNameErrorMsg.innerText ="Entrez un prénom valide"
+  } else {
+    firstNameErrorMsg.innerText ="Prénom valide"
+  }
+});
+
+//Validation du nom
+let lastNameInput = document.getElementById("lastName");
+
+function validLastName (input){
+  return /^[a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+([-'\s][a-zA-ZéèîïÉÈÎÏ][a-zéèêàçîï]+)?$/.test(input)
+}
+lastNameInput.addEventListener("change", () => {
+  if(validLastName(lastNameInput.value) == false){
+    lastNameErrorMsg.innerText = "Entrez un nom valide"
+  } else {
+    lastNameErrorMsg.innerText = "Nom valide"
+  }
+});
+
+// Validation de l'adresse
+let adressInput = document.getElementById("address");
+function valideAdress (input){
+  return   /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s\,\'\-]*$/.test(input)
+}
+adressInput.addEventListener("change", () => {
+  if(valideAdress(adressInput.value) == false){
+    addressErrorMsg.innerText = "Adresse invalide"
+  } else {
+    addressErrorMsg.innerText = "Adresse valide"
+  }
+});
+
+// Validation de la ville
+let cityInput = document.getElementById("city");
+function validCity (input){
+  return  /^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ\s\,\'\-]*$/.test(input)
+}
+cityInput.addEventListener("change", ()=>{
+  if(validCity(cityInput.value) == false){
+    cityErrorMsg.innerText = "Ville invalide"
+  } else {
+    cityErrorMsg.innerText = "Ville valide"
+  }
+});
+
+//Validation du mail
+let mailInput = document.getElementById("emailErrorMsg");
+function validMailInput (input){
+  return  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input)
+}
+mailInput.addEventListener("change", ()=>{
+  if(validMailInput(mailInput.value) == false){
+    emailErrorMsg.innerText = "Mail invalide"
+  } else {
+    emailErrorMsg.innerText = "Mail valide"
+  }
+});
+
+// Commander
+
+const postUrlApi = "http://localhost:3000/api/products/order"
+const submitBtn = document.getElementById("order");
+
+submitBtn.addEventListener("click", (e)=>{
+  e.preventDefault()
+});
+
+//Vérification du formulaire
+if(firstNameInput.value == "" || lastNameInput.value == "" || adressInput.value == "" || cityInput.value == "" || mailInput.value == ""){
+  alert("Tous les champs doivent être remplis")
+} else if (confirm("Souhaitez-vous finaliser la commande ?") == true){
+  let arrayKanap = []
+
+  //Récupération des données du formulaire
+  let order = {
+    contact: {
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      adress: adressInput.value,
+      city: cityInput.value,
+      mail: mailInput.value
+    },
+    items: arrayKanap
+  }
+
+
+// Envoi du formulaire dans la page de confirmation avec la méthode POST
+const sendForm = {
+  method: 'POST',
+  body: JSON.stringify(order),
+  _headers: {
+    'Content-type': 'application/json',
+    'Accept': 'application.json'
+  },
+  get headers() {
+    return this._headers;
+  },
+  set headers(value) {
+    this._headers = value;
+  },
+};
+
+fetch(postUrlApi, sendForm)
+  .then(response => response.json())
+  .then(datas => {
+    window.location.href = "confirmation.html?orderId="+ datas.orderId
+  })
+  .catch(error =>{
+    alert(error);
+  })
 }
