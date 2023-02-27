@@ -267,24 +267,24 @@ const cityErrorMsg = document.getElementById("cityErrorMsg");
 const emailErrorMsg = document.getElementById("emailErrorMsg");
 
 // Commander
-const postUrl = 'http://localhost:3000/api/products/order';
+const postUrlApi = 'http://localhost:3000/api/products/order';
 
-const orderBtn = document.getElementById("order");
+const submitBtn = document.getElementById("order");
 
-orderBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+submitBtn.addEventListener("click", (event) => {
+  event.preventDefault();
 
-  //Vérification si le formulaire est bien rempli
+  //On vérifie que le formulaire soit bien rempli
   if (firstNameInput.value == "" || lastNameInput.value == "" || adressInput.value == "" || cityInput.value == "" || mailInput.value == "") {
     alert("Veuillez remplir tous les champs du formulaire");
   }
 
   else if (confirm("Confirmez-vous votre commande ? ") == true) {
 
-    let arrayProduct = []
+    let arrayKanap = []
 
-    // Récupération des données du formulaire
-    let order = {
+    // On récupère les données du formulaire
+    let dataOrder = {
       contact: {
         firstName: firstNameInput.value,
         lastName: lastNameInput.value,
@@ -292,21 +292,21 @@ orderBtn.addEventListener("click", (e) => {
         city: cityInput.value,
         email: mailInput.value
       },
-      products: arrayProduct
+      products: arrayKanap
     };
 
-    // Requete POST envoi du formulaire dans la page confirmation
-    const options = {
+    // Envoi du formulaire et redirection vers la page de confirmation
+    const postForm = {
       method: 'POST',
-      body: JSON.stringify(order),
+      body: JSON.stringify(dataOrder),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     };
 
-    fetch(postUrl, options) // Appel de l'API
-      .then(res => res.json())
+    fetch(postUrlApi, postForm) // Appel de l'API
+      .then(response => response.json())
       .then(datas => {
 
         // Envoie des informations dans la page confirmation
