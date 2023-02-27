@@ -267,10 +267,58 @@ const cityErrorMsg = document.getElementById("cityErrorMsg");
 const emailErrorMsg = document.getElementById("emailErrorMsg");
 
 // Commander
+const postUrl = 'http://localhost:3000/api/products/order';
 
-const sendForm = document.getElementById("order");
+const orderBtn = document.getElementById("order");
 
-// controle du formulaire
-if(firstNameInput == "" || lastNameInput == "" || adressInput == "" || cityInput == "" || mailInput == ""){
-  
-}
+orderBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  //Vérification si le formulaire est bien rempli
+  if (firstNameInput.value == "" || lastNameInput.value == "" || adressInput.value == "" || cityInput.value == "" || mailInput.value == "") {
+    alert("Veuillez remplir tous les champs du formulaire");
+  }
+
+  else if (confirm("Confirmez-vous votre commande ? ") == true) {
+
+    let arrayProduct = []
+
+    // Récupération des données du formulaire
+    let order = {
+      contact: {
+        firstName: firstNameInput.value,
+        lastName: lastNameInput.value,
+        address: adressInput.value,
+        city: cityInput.value,
+        email: mailInput.value
+      },
+      products: arrayProduct
+    };
+
+    // Requete POST envoi du formulaire dans la page confirmation
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(order),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    };
+
+    fetch(postUrl, options) // Appel de l'API
+      .then(res => res.json())
+      .then(datas => {
+
+        // Envoie des informations dans la page confirmation
+        window.location.href = "confirmation.html?orderId=" + datas.orderId;
+      })
+      .catch(error => {
+        alert(error);
+      })
+
+  }
+  else {
+    return false;
+  }
+})
+window.addEventListener("load", deleteCanap(), getTotals());
