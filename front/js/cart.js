@@ -254,7 +254,7 @@ cityInput.addEventListener("change", ()=>{
 });
 
 //Validation du mail
-let mailInput = document.getElementById("emailErrorMsg");
+let mailInput = document.getElementById("email");
 function validMailInput (input){
   return  /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input)
 }
