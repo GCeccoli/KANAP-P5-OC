@@ -201,8 +201,6 @@ function validFirstName (input) {
 firstNameInput.addEventListener("change", () =>{
   if(validFirstName(firstNameInput.value) == false){
     firstNameErrorMsg.innerText ="Entrez un prénom valide"
-  } else {
-    firstNameErrorMsg.innerText ="Prénom valide"
   }
 });
 
