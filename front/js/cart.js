@@ -150,7 +150,6 @@ function getTotals(){
 
   let productTotalPrice = document.getElementById('totalPrice');
   productTotalPrice.innerHTML = totalPrice;
-  console.log(totalPrice);
 }
 getTotals();
 

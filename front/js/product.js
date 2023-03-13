@@ -75,16 +75,29 @@ sendToCart.addEventListener("click", ()=>{
 
         // On recherche si le produit est déjà dans le panier
         let foundProduct = cart.find(p => p.idKanap == idProduct && p.colorKanap == choiceColor.value);
-        alert("Produit ajouté au panier");
         //console.log(foundProduct);
 
-        // Si le produit n'est pas dans le panier on l'incrémente sinon, on crée un nouveau tableau.
+        //On vérifie que le produit est déjà présent dans le panier, si il n'est pas présent, on l'incrémente
+        if (isNaN.quantityKanap == choiceQuantity.value || choiceQuantity.value < 1){
+            alert("Entrez une quantité valide !")
+        } else if (choiceQuantity.value > 100){
+            alert("Vous ne pouvez pas sélectionner plus de 100 produits !")
+        } else if (choiceColor.value === ""){
+            alert("Vous devez choisir une couleur !")
+        } else if (foundProduct !== undefined){
+            foundProduct.quantityKanap = parseInt(foundProduct.quantityKanap) + parseInt(choiceQuantity.value)
+        } else {
+            cart.push(addedItem);
+            alert("Produit ajouté au panier");
+        }
+        
+        /* // Si le produit n'est pas dans le panier on l'incrémente sinon, on crée un nouveau tableau.
         if (foundProduct !== undefined){
             foundProduct.quantityKanap = parseInt(foundProduct.quantityKanap) + parseInt(choiceQuantity.value);
         } else {
             cart.push(addedItem);
             
-        }
+        } */
         
         saveCart(cart);
     }
