@@ -200,8 +200,6 @@ function validFirstName (input) {
 firstNameInput.addEventListener("change", () =>{
   if(validFirstName(firstNameInput.value) == false){
     firstNameErrorMsg.innerText ="Entrez un prénom valide"
-  } else {
-    firstNameErrorMsg.innerText ="Prénom valide"
   }
 });
 
@@ -214,8 +212,6 @@ function validLastName (input){
 lastNameInput.addEventListener("change", () => {
   if(validLastName(lastNameInput.value) == false){
     lastNameErrorMsg.innerText = "Entrez un nom valide"
-  } else {
-    lastNameErrorMsg.innerText = "Nom valide"
   }
 });
 
@@ -227,8 +223,6 @@ function valideAdress (input){
 adressInput.addEventListener("change", () => {
   if(valideAdress(adressInput.value) == false){
     addressErrorMsg.innerText = "Adresse invalide"
-  } else {
-    addressErrorMsg.innerText = "Adresse valide"
   }
 });
 
@@ -240,8 +234,6 @@ function validCity (input){
 cityInput.addEventListener("change", ()=>{
   if(validCity(cityInput.value) == false){
     cityErrorMsg.innerText = "Ville invalide"
-  } else {
-    cityErrorMsg.innerText = "Ville valide"
   }
 });
 
@@ -253,8 +245,6 @@ function validMailInput (input){
 mailInput.addEventListener("change", ()=>{
   if(validMailInput(mailInput.value) == false){
     emailErrorMsg.innerText = "Mail invalide"
-  } else {
-    emailErrorMsg.innerText = "Mail valide"
   }
 });
 
